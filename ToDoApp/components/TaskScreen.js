@@ -10,6 +10,7 @@ const TaskScreen = ({ navigation }) => {
     const [taskItems, setTaskItems] = useState([]);
     const [isEditing, setIsEditing] = useState(false);
     const [currentTaskIndex, setCurrentTaskIndex] = useState(null);
+    const [searchQuery, setSearchQuery] = useState('');
 
     const handleAddTask = () => {
         if (!taskTitle || !taskDescription) {
@@ -55,6 +56,11 @@ const TaskScreen = ({ navigation }) => {
         setTaskItems(itemsCopy);
     };
 
+    const filteredTasks = taskItems.filter(task => 
+        task.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        task.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <View style={styles.container}>
             <KeyboardAvoidingView
@@ -62,15 +68,24 @@ const TaskScreen = ({ navigation }) => {
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 keyboardVerticalOffset={90}
             >
-                {/* Non-scrollable Header and Completed Button */}
                 <View style={styles.tasksWrapper}>
                     <Text style={styles.sectionTitle}>Tasks for Today</Text>
+                    
+                    {/* Search TextInput */}
+                    <TextInput
+                        style={styles.searchInput}
+                        placeholder='Search Tasks'
+                        value={searchQuery}
+                        onChangeText={text => setSearchQuery(text)}
+                    />
+                    
                     <TouchableOpacity
                         style={styles.completedButton}
                         onPress={() => navigation.navigate('CompletedTasks')}
                     >
                         <Text style={styles.completedButtonText}>View Completed Tasks</Text>
                     </TouchableOpacity>
+                    
                     {/* Display logo and message if no tasks */}
                     {taskItems.length === 0 && (
                         <View style={styles.noTasksWrapper}>
@@ -80,9 +95,8 @@ const TaskScreen = ({ navigation }) => {
                     )}
                 </View>
 
-                {/* Scrollable Task List */}
                 <ScrollView style={styles.items}>
-                    {taskItems.map((item, index) => (
+                    {filteredTasks.map((item, index) => (
                         <Task
                             key={index}
                             title={item.title}
@@ -95,7 +109,6 @@ const TaskScreen = ({ navigation }) => {
                     ))}
                 </ScrollView>
 
-                {/* Input Fields and Add Button */}
                 <View style={styles.writeTaskWrapper}>
                     <TextInput
                         style={styles.input}
@@ -138,7 +151,7 @@ const styles = StyleSheet.create({
         color: '#6EACDA',
     },
     completedButton: {
-        marginTop: 20,
+        marginTop: 10,
         paddingVertical: 10,
         paddingHorizontal: 15,
         borderRadius: 20,
@@ -152,6 +165,16 @@ const styles = StyleSheet.create({
         color: '#007BFF',
         textAlign: 'center',
         fontFamily: 'Avenir Next',
+    },
+    searchInput: {
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        marginTop: 30,
+        backgroundColor: '#e2eafc',
+        borderRadius: 20,
+        borderColor: '#6096ba',
+        borderWidth: 1,
+        marginBottom: 20,
     },
     items: {
         marginTop: 30,
@@ -192,7 +215,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
     },
     noTasksWrapper: {
-        marginTop: 200,
+        marginTop: 150,
         alignItems: 'center',
     },
     logo: {
