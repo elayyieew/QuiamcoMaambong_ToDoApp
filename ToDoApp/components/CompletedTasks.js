@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#edf2fb',
-    paddingTop: 100,
+    paddingTop: 50,
     paddingHorizontal: 20,
   },
   header: {
@@ -129,7 +129,7 @@ const styles = StyleSheet.create({
     color: '#FF0000',
   },
   noTasksContainer: {
-    marginTop: 200,
+    marginTop: 250,
     alignItems: 'center',
   },
   noTasksText: {

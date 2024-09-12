@@ -31,7 +31,7 @@ const Task = (props) => {
 
 const styles = StyleSheet.create({
     item: {
-        backgroundColor: '#bbdefb',
+        backgroundColor: '#6EACDA',
         padding: 15,
         borderRadius: 10,
         flexDirection: 'row',
@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     square: {
         width: 24,
         height: 24,
-        backgroundColor: '#2196f3',
+        backgroundColor: '#01497c',
         borderRadius: 5,
         marginRight: 15,
     },
@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     itemTitle: {
         fontWeight: 'bold',
         fontSize: 16,
+        color: '#012a4a',
     },
     itemDescription: {
         fontSize: 14,
